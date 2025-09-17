@@ -21,7 +21,7 @@ jobs:
         uses: mlugg/setup-zig@v2
 
       - name: Install build dependencies
-        run: sudo apt-get install libx11-dev libxext-dev libxrender-dev
+        run: sudo apt-get update && sudo apt-get install -y libx11-dev libxext-dev libxrender-dev libglu1-mesa-dev libgl1-mesa-dev
 
       - name: Build Linux binary
         run: zig build tree-simple
