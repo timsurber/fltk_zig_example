@@ -1,0 +1,18 @@
+.{
+    .name = .fltk_zig_example,
+    .version = "0.0.0",
+    .fingerprint = 0xa34db3c4bc00e416,
+    .minimum_zig_version = "0.14.1",
+
+    .dependencies = .{
+        .fltk = .{
+            .url = "git+https://github.com/timsurber/fltk?ref=main#c43323044bb02bba14dd2a27bd1122dfd07d94ba",
+            .hash = "fltk-1.4.4-6OxQh7c8AACZGDryd7Rfb05Th-yHbDYw9ovqoM-0oeIP",
+        },
+        .fltk_sources = .{
+            .url = "https://github.com/fltk/fltk/releases/download/release-1.4.4/fltk-1.4.4-source.tar.gz",
+            .hash = "N-V-__8AAHXabQGMcsjcykXANFOORO1KlKyEeD66HKuQI3T2",
+        },
+    },
+    .paths = .{ "build.zig", "build.zig.zon", "src" },
+}
