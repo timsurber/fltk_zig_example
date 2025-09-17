@@ -5,6 +5,9 @@ const linux_system_libs = [_][]const u8{
     "dl",
     "m",
     "X11",
+    "Xext",
+    "GL",
+    "GLU",
 };
 
 const windows_system_libs = [_][]const u8{
@@ -56,6 +59,7 @@ pub fn build(b: *std.Build) void {
 
     tree_simple.root_module.addIncludePath(fltk_sources.path("."));
     tree_simple.root_module.addIncludePath(fltk_sources.path("src"));
+    tree_simple.root_module.addIncludePath(fltk_sources.path("FL"));
     tree_simple.root_module.addIncludePath(fltk_pkg.path("zig-config"));
 
     tree_simple.root_module.addCSourceFile(.{
