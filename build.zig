@@ -24,6 +24,63 @@ const windows_system_libs = [_][]const u8{
     "winspool",
 };
 
+const example_sources = [_][]const u8{
+    "examples/tree-simple.cxx",
+    "examples/tree-custom-sort.cxx",
+    "examples/animgifimage.cxx",
+    "examples/animgifimage-play.cxx",
+    "examples/animgifimage-resize.cxx",
+    "examples/animgifimage-simple.cxx",
+    "examples/browser-simple.cxx",
+    // "examples/cairo-draw-x.cxx",
+    "examples/callbacks.cxx",
+    "examples/chart-simple.cxx",
+    "examples/draggable-group.cxx",
+    "examples/grid-simple.cxx",
+    "examples/howto-add_fd-and-popen.cxx",
+    "examples/howto-browser-with-icons.cxx",
+    "examples/howto-drag-and-drop.cxx",
+    "examples/howto-draw-an-x.cxx",
+    "examples/howto-flex-simple.cxx",
+    "examples/howto-menu-with-images.cxx",
+    "examples/howto-parse-args.cxx",
+    "examples/howto-remap-numpad-keyboard-keys.cxx",
+    "examples/howto-simple-svg.cxx",
+    "examples/howto-text-over-image-button.cxx",
+    "examples/menubar-add.cxx",
+    "examples/nativefilechooser-simple-app.cxx",
+    "examples/nativefilechooser-simple.cxx",
+    // "examples/OpenGL3-glut-test.cxx",
+    // "examples/OpenGL3test.cxx",
+    "examples/progress-simple.cxx",
+    "examples/shapedwindow.cxx",
+    "examples/simple-terminal.cxx",
+    "examples/table-as-container.cxx",
+    "examples/table-simple.cxx",
+    "examples/table-sort.cxx",
+    "examples/table-spreadsheet.cxx",
+    "examples/table-spreadsheet-with-keyboard-nav.cxx",
+    "examples/table-with-keynav.cxx",
+    "examples/table-with-right-click-menu.cxx",
+    "examples/table-with-right-column-stretch-fit.cxx",
+    "examples/tabs-simple.cxx",
+    "examples/textdisplay-with-colors.cxx",
+    "examples/texteditor-simple.cxx",
+    "examples/texteditor-with-dynamic-colors.cxx",
+    "examples/tree-as-container.cxx",
+    "examples/tree-custom-draw-items.cxx",
+    "examples/tree-of-tables.cxx",
+    "examples/wizard-simple.cxx",
+};
+
+fn exampleNameFromSource(source: []const u8) []const u8 {
+    const base = std.fs.path.basename(source);
+    if (std.mem.lastIndexOfScalar(u8, base, '.')) |dot| {
+        return base[0..dot];
+    }
+    return base;
+}
+
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
@@ -48,32 +105,36 @@ pub fn build(b: *std.Build) void {
 
     const cxx_flags = [_][]const u8{"-std=c++11"};
 
-    const tree_simple = b.addExecutable(.{
-        .name = "tree-simple",
-        .target = target,
-        .optimize = optimize,
-    });
+    const example_step = b.step("example", "Build example binaries");
 
-    tree_simple.linkLibC();
-    tree_simple.linkLibCpp();
+    for (example_sources) |source| {
+        const example_name = exampleNameFromSource(source);
 
-    tree_simple.root_module.addIncludePath(fltk_sources.path("."));
-    tree_simple.root_module.addIncludePath(fltk_sources.path("src"));
-    tree_simple.root_module.addIncludePath(fltk_sources.path("FL"));
-    tree_simple.root_module.addIncludePath(fltk_pkg.path("zig-config"));
+        const exe = b.addExecutable(.{
+            .name = example_name,
+            .target = target,
+            .optimize = optimize,
+        });
 
-    tree_simple.root_module.addCSourceFile(.{
-        .file = fltk_sources.path("examples/tree-simple.cxx"),
-        .flags = &cxx_flags,
-        .language = .cpp,
-    });
+        exe.linkLibC();
+        exe.linkLibCpp();
 
-    tree_simple.linkLibrary(fltk_lib);
-    for (system_libs) |syslib| {
-        tree_simple.linkSystemLibrary(syslib);
+        exe.root_module.addIncludePath(fltk_sources.path("."));
+        exe.root_module.addIncludePath(fltk_sources.path("src"));
+        exe.root_module.addIncludePath(fltk_pkg.path("zig-config"));
+
+        exe.root_module.addCSourceFile(.{
+            .file = fltk_sources.path(source),
+            .flags = &cxx_flags,
+            .language = .cpp,
+        });
+
+        exe.linkLibrary(fltk_lib);
+        for (system_libs) |syslib| {
+            exe.linkSystemLibrary(syslib);
+        }
+
+        const install = b.addInstallArtifact(exe, .{});
+        example_step.dependOn(&install.step);
     }
-
-    const tree_simple_install = b.addInstallArtifact(tree_simple, .{});
-    const tree_simple_step = b.step("tree-simple", "Build the tree-simple example");
-    tree_simple_step.dependOn(&tree_simple_install.step);
 }

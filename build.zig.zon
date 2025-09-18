@@ -10,8 +10,8 @@
             .hash = "N-V-__8AAHXabQGMcsjcykXANFOORO1KlKyEeD66HKuQI3T2",
         },
         .fltk = .{
-            .url = "git+https://github.com/timsurber/fltk?ref=main#88421e037fdad2426a37d5d16f139b450d33d4cf",
-            .hash = "fltk-1.4.4-6OxQhyyJAABvH7OWUPJcQ87OFYDdqsJsrXidjsRLvsYf",
+            .url = "git+https://github.com/timsurber/fltk?ref=main#82702b3ba21e5e3e21d00c4bcc2477e73cf59cec",
+            .hash = "fltk-1.4.4-6OxQh-aJAABUC1usbKSqMV_onaAzTMgDHfkCVspywdXW",
         },
     },
     .paths = .{ "build.zig", "build.zig.zon", "src" },
