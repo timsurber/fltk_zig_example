@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libx11-dev libxext-dev libxrender-dev libglu1-mesa-dev libgl1-mesa-dev
 
       - name: Build Linux binary
-        run: zig build tree-simple
+        run: zig build example
 
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v4
@@ -33,7 +33,7 @@ jobs:
           path: zig-out/bin/tree-simple
 
       - name: Build Windows binary
-        run: zig build tree-simple -Dtarget=x86_64-windows-gnu -p zig-out-windows
+        run: zig build example -Dtarget=x86_64-windows-gnu -p zig-out-windows
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
