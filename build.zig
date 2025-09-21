@@ -38,9 +38,6 @@ pub fn build(b: *std.Build) void {
         exe.linkLibC();
         exe.linkLibCpp();
 
-        exe.root_module.addIncludePath(fltk_pkg.path("."));
-        exe.root_module.addIncludePath(fltk_pkg.path("src"));
-
         exe.root_module.addCSourceFile(.{
             .file = b.path(source),
             .flags = &cxx_flags,
