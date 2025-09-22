@@ -1,7 +1,12 @@
 const std = @import("std");
 
 const example_sources = [_][]const u8{
-    "src/examples/tree-simple.cxx",
+    "fltk/examples/tree-simple.cxx",
+    "fltk/examples/animgifimage.cxx",
+    "fltk/examples/table-sort.cxx",
+    "fltk/examples/howto-simple-svg.cxx",
+    //"fltk/examples/OpenGL3test.cxx",
+    //"fltk/examples/cairo-draw-x.cxx",
 };
 
 fn exampleNameFromSource(source: []const u8) []const u8 {

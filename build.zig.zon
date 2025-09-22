@@ -6,8 +6,7 @@
 
     .dependencies = .{
         .fltk = .{
-            .url = "https://github.com/timsurber/fltk/archive/refs/heads/main.zip",
-            .hash = "fltk-1.4.4-6OxQhwRDAAB7iQDCZNvSr4HbkMg1XnhW3LWG5GjtaOgS",
+            .path = "../fltk_zig",
         },
     },
     .paths = .{ "build.zig", "build.zig.zon", "src" },
